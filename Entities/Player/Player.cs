@@ -17,6 +17,11 @@ public class Player : KinematicBody
         if (@event is InputEventMouseMotion eventMouseMotion) 
         {
             RotateY(Godot.Mathf.Deg2Rad(-eventMouseMotion.Relative.x * MouseSensitivity));
+            Head.RotateX(Godot.Mathf.Deg2Rad(-eventMouseMotion.Relative.y * MouseSensitivity));
+
+            Vector3 headRotation = Head.Rotation;
+            headRotation.x = Godot.Mathf.Clamp(Head.Rotation.x, Godot.Mathf.Deg2Rad(-89), Godot.Mathf.Deg2Rad(89));
+            Head.Rotation = headRotation;
         }
     }
 }
