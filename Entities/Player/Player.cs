@@ -39,7 +39,7 @@ public class Player : KinematicBody
         {
             Direction += Transform.basis.z;
         }
-        else if (Input.IsActionPressed("move_left"))
+        if (Input.IsActionPressed("move_left"))
         {
             Direction -= Transform.basis.x;
         }
