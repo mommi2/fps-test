@@ -7,11 +7,14 @@ public class Player : KinematicBody
     private Spatial Head;
     private Vector3 Direction;
     private int Speed = 10;
+    private int Accelaration = 6;
+    private Vector3 Velocity;
 
     public override void _Ready()
     {
         Input.SetMouseMode(Input.MouseMode.Captured);
         Head = GetNode<Spatial>("Head");
+        GD.Print("Ready");
     }
 
     public override void _Input(InputEvent @event)
@@ -31,11 +34,16 @@ public class Player : KinematicBody
     {
         Direction = Vector3.Zero;
 
+        if (Input.IsActionPressed("ui_cancel"))
+        {
+            Input.SetMouseMode(Input.MouseMode.Visible);
+        }
+
         if (Input.IsActionPressed("move_forward"))
         {
             Direction -= Transform.basis.z;
         }
-        else if (Input.IsActionPressed("move_backward"))
+        if (Input.IsActionPressed("move_backward"))
         {
             Direction += Transform.basis.z;
         }
@@ -43,12 +51,13 @@ public class Player : KinematicBody
         {
             Direction -= Transform.basis.x;
         }
-        else if (Input.IsActionPressed("move_right"))
+        if (Input.IsActionPressed("move_right"))
         {
             Direction += Transform.basis.x;
         }
 
         Direction = Direction.Normalized();
-        MoveAndSlide(Direction * Speed, Vector3.Up);
+        Velocity = Velocity.LinearInterpolate(Direction * Speed, Accelaration * delta);
+        MoveAndSlide(Velocity, Vector3.Up);
     }
 }
