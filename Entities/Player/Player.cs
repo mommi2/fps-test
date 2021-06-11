@@ -6,7 +6,7 @@ public class Player : KinematicBody
     private float MouseSensitivity = 0.3f;
     private Spatial Head;
     private Vector3 Direction;
-    private int Speed = 10;
+    private int Speed = 50;
     private int Accelaration = 6;
     private Vector3 Velocity;
 
@@ -39,6 +39,7 @@ public class Player : KinematicBody
             Input.SetMouseMode(Input.MouseMode.Visible);
         }
 
+        // TASTI DIREZIONALI ===================================
         if (Input.IsActionPressed("move_forward"))
         {
             Direction -= Transform.basis.z;
@@ -57,6 +58,8 @@ public class Player : KinematicBody
         }
 
         Direction = Direction.Normalized();
+
+        //Pensa alla interpolazione lineare tra due colori
         Velocity = Velocity.LinearInterpolate(Direction * Speed, Accelaration * delta);
         MoveAndSlide(Velocity, Vector3.Up);
     }
