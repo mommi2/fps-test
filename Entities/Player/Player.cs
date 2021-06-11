@@ -3,18 +3,26 @@ using System;
 
 public class Player : KinematicBody
 {
+    [Export]
     private float MouseSensitivity = 0.3f;
+    
+    [Export]
+    private int Speed = 10;
+    
+    [Export]
+    private int Accelaration = 15;
+
+    [Export]
+    private int Gravity = -60;
+
+    private Vector3 Velocity;
     private Spatial Head;
     private Vector3 Direction;
-    private int Speed = 50;
-    private int Accelaration = 6;
-    private Vector3 Velocity;
 
     public override void _Ready()
     {
         Input.SetMouseMode(Input.MouseMode.Captured);
         Head = GetNode<Spatial>("Head");
-        GD.Print("Ready");
     }
 
     public override void _Input(InputEvent @event)
@@ -39,7 +47,7 @@ public class Player : KinematicBody
             Input.SetMouseMode(Input.MouseMode.Visible);
         }
 
-        // TASTI DIREZIONALI ===================================
+        // =================================== TASTI DIREZIONALI ===================================
         if (Input.IsActionPressed("move_forward"))
         {
             Direction -= Transform.basis.z;
@@ -56,11 +64,20 @@ public class Player : KinematicBody
         {
             Direction += Transform.basis.x;
         }
-
+        
         Direction = Direction.Normalized();
 
-        //Pensa alla interpolazione lineare tra due colori
+        //NOTA: Pensa alla interpolazione lineare tra due colori
         Velocity = Velocity.LinearInterpolate(Direction * Speed, Accelaration * delta);
+        
+        //Applico la gravita lungo l'asse y
+        Velocity.y += Gravity * delta;
+        
         MoveAndSlide(Velocity, Vector3.Up);
+
+        if (IsOnFloor() && Velocity.y < 0)
+        {
+            Velocity.y = 0;
+        }
     }
 }

@@ -8,7 +8,7 @@ mid_height = 1.5
 
 [sub_resource type="CapsuleShape" id=2]
 radius = 0.5
-height = 1.5
+height = 1.53704
 
 [node name="Player" type="KinematicBody"]
 script = ExtResource( 1 )
