@@ -13,7 +13,13 @@ public class Player : KinematicBody
     private int Accelaration = 15;
 
     [Export]
-    private int Gravity = -60;
+    private float Gravity = 40;
+
+    [Export]
+    private int JumpVelocity = 30;
+
+    [Export]
+    private int AirAccelaration = 5;
 
     private Vector3 Velocity;
     private Spatial Head;
@@ -67,17 +73,19 @@ public class Player : KinematicBody
         
         Direction = Direction.Normalized();
 
-        //NOTA: Pensa alla interpolazione lineare tra due colori
-        Velocity = Velocity.LinearInterpolate(Direction * Speed, Accelaration * delta);
+        Velocity.y -= Gravity * delta;
         
-        //Applico la gravita lungo l'asse y
-        Velocity.y += Gravity * delta;
-        
-        MoveAndSlide(Velocity, Vector3.Up);
-
-        if (IsOnFloor() && Velocity.y < 0)
+        if (Input.IsActionJustPressed("jump") && IsOnFloor())
         {
-            Velocity.y = 0;
+            Velocity.y = JumpVelocity;
         }
+
+        int currAccelaration = IsOnFloor() ? Accelaration : AirAccelaration;
+        //NOTA: Pensa alla interpolazione lineare tra due colori
+        Velocity = Velocity.LinearInterpolate(Direction * Speed, currAccelaration * delta);
+        
+        
+
+        Velocity = MoveAndSlide(Velocity, Vector3.Up);
     }
 }
