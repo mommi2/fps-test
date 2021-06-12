@@ -8,6 +8,9 @@ public class Player : KinematicBody
     
     [Export]
     private int Speed = 10;
+
+    [Export]
+    private int SprintSpeed = 20;
     
     [Export]
     private int Accelaration = 15;
@@ -81,8 +84,9 @@ public class Player : KinematicBody
         }
 
         int currAccelaration = IsOnFloor() ? Accelaration : AirAccelaration;
+        int currSpeed = Input.IsActionPressed("sprint") ? SprintSpeed : Speed;
         //NOTA: Pensa alla interpolazione lineare tra due colori
-        Velocity = Velocity.LinearInterpolate(Direction * Speed, currAccelaration * delta);
+        Velocity = Velocity.LinearInterpolate(Direction * currSpeed, currAccelaration * delta);
         
         
 
