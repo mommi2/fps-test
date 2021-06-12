@@ -16,10 +16,10 @@ public class Player : KinematicBody
     private float Gravity = 40;
 
     [Export]
-    private int JumpVelocity = 30;
+    private int JumpVelocity = 15;
 
     [Export]
-    private int AirAccelaration = 5;
+    private int AirAccelaration = 0;
 
     private Vector3 Velocity;
     private Spatial Head;
