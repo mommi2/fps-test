@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Entities/Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Entities/Platform/Platform.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Util/Debug/Console.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CubeMesh" id=1]
 
@@ -26,6 +27,11 @@ data = PoolVector3Array( 0, 1, 1, 1, -1, 1, -1, -1, 1, 0, 1, -1, -1, -1, -1, 1, 
 [sub_resource type="ConcavePolygonShape" id=9]
 data = PoolVector3Array( -1, 1, 1, 1, 1, 1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, -1, 1, 1, 1, -1, -1, 1, -1, 1, -1, -1, -1, 1, -1, -1, -1, -1, 1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, 1, 1, 1, -1, 1, -1, -1, 1, -1, 1, -1, 1, -1, -1, 1, 1, -1, -1, -1, -1, 1, 1, -1, -1, 1, -1, -1, -1, 1, 1, 1, -1, 1, 1, 1, 1, -1, -1, 1, 1, -1, 1, -1, 1, 1, -1, -1, -1, 1, 1, -1, 1, -1, -1, -1, 1, -1, 1, 1, -1, -1, -1, -1, -1 )
 
+[sub_resource type="PrismMesh" id=10]
+
+[sub_resource type="ConcavePolygonShape" id=11]
+data = PoolVector3Array( 0, 1, 1, 1, -1, 1, -1, -1, 1, 0, 1, -1, -1, -1, -1, 1, -1, -1, 0, 1, 1, 0, 1, -1, 1, -1, 1, 0, 1, -1, 1, -1, -1, 1, -1, 1, 0, 1, -1, 0, 1, 1, -1, -1, -1, 0, 1, 1, -1, -1, 1, -1, -1, -1, -1, -1, 1, 1, -1, 1, -1, -1, -1, 1, -1, 1, 1, -1, -1, -1, -1, -1 )
+
 [node name="Test_1" type="Spatial"]
 
 [node name="Platform" parent="." instance=ExtResource( 2 )]
@@ -35,6 +41,9 @@ transform = Transform( 4.3, 0, 0, 0, 1, 0, 0, 0, 4.35, 0, 0, 0 )
 transform = Transform( -0.999593, -0.0142575, 0.0246946, 0.0020586, 0.827683, 0.561192, -0.0284405, 0.561014, -0.827317, 0, 10, 0 )
 light_energy = 0.5
 shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.852563, 0 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12.3092, 1.56836, 10 )
@@ -86,5 +95,14 @@ material/0 = null
 [node name="CollisionShape" type="CollisionShape" parent="MeshInstance5/StaticBody"]
 shape = SubResource( 9 )
 
-[node name="Player" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.825173, 0 )
+[node name="MeshInstance6" type="MeshInstance" parent="."]
+transform = Transform( 7.30691, 0, 0, 0, 3.33466, 0, 0, 0, 2.42933, 0, 1.67736, 16.8789 )
+mesh = SubResource( 10 )
+material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="MeshInstance6"]
+
+[node name="CollisionShape" type="CollisionShape" parent="MeshInstance6/StaticBody"]
+shape = SubResource( 11 )
+
+[node name="Console" parent="." instance=ExtResource( 3 )]

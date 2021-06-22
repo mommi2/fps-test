@@ -19,19 +19,24 @@ public class Player : KinematicBody
     private float Gravity = 40;
 
     [Export]
+    private float MaxGravity = 150;
+
+    [Export]
     private int JumpVelocity = 15;
 
     [Export]
     private int AirAccelaration = 0;
 
     private Vector3 Velocity;
-    private Spatial Head;
     private Vector3 Direction;
+    private Spatial Head;
+    private RayCast GroundCheck;
 
     public override void _Ready()
     {
         Input.SetMouseMode(Input.MouseMode.Captured);
         Head = GetNode<Spatial>("Head");
+        GroundCheck = GetNode<RayCast>("GroundCheck");
     }
 
     public override void _Input(InputEvent @event)
@@ -77,6 +82,15 @@ public class Player : KinematicBody
         Direction = Direction.Normalized();
 
         Velocity.y -= Gravity * delta;
+        if (Velocity.y < -MaxGravity) 
+        {
+            Velocity.y = -MaxGravity;
+        }
+
+        if (IsOnFloor() && GroundCheck.IsColliding())
+        {
+            Velocity.y = 0;
+        }
         
         if (Input.IsActionJustPressed("jump") && IsOnFloor())
         {
@@ -87,8 +101,6 @@ public class Player : KinematicBody
         int currSpeed = Input.IsActionPressed("sprint") ? SprintSpeed : Speed;
         //NOTA: Pensa alla interpolazione lineare tra due colori
         Velocity = Velocity.LinearInterpolate(Direction * currSpeed, currAccelaration * delta);
-        
-        
 
         Velocity = MoveAndSlide(Velocity, Vector3.Up);
     }
