@@ -1,7 +1,8 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
-public class Player : KinematicBody
+public class Player : KinematicBody, IDebuggable
 {
     [Export]
     private float MouseSensitivity = 0.3f;
@@ -52,6 +53,15 @@ public class Player : KinematicBody
         }
     }
 
+    public Dictionary<string, object> GetDebugData()
+    {
+        return new Dictionary<string, object>()
+        {
+            { "Ground Check", GroundCheck.IsColliding().ToString() },
+            { "Velocity (y)", Velocity.y }
+        };
+    }
+    
     public override void _PhysicsProcess(float delta)
     {
         Direction = Vector3.Zero;
@@ -87,11 +97,6 @@ public class Player : KinematicBody
             Velocity.y = -MaxGravity;
         }
 
-        if (IsOnFloor() && GroundCheck.IsColliding())
-        {
-            Velocity.y = 0;
-        }
-        
         if (Input.IsActionJustPressed("jump") && IsOnFloor())
         {
             Velocity.y = JumpVelocity;
@@ -101,6 +106,8 @@ public class Player : KinematicBody
         int currSpeed = Input.IsActionPressed("sprint") ? SprintSpeed : Speed;
         //NOTA: Pensa alla interpolazione lineare tra due colori
         Velocity = Velocity.LinearInterpolate(Direction * currSpeed, currAccelaration * delta);
+
+        
 
         Velocity = MoveAndSlide(Velocity, Vector3.Up);
     }

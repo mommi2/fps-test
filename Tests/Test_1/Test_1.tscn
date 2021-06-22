@@ -106,3 +106,4 @@ material/0 = null
 shape = SubResource( 11 )
 
 [node name="Console" parent="." instance=ExtResource( 3 )]
+EntityToDebug = NodePath("../Player")
