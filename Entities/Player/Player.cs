@@ -31,13 +31,11 @@ public class Player : KinematicBody, IDebuggable
     private Vector3 Velocity;
     private Vector3 Direction;
     private Spatial Head;
-    private RayCast GroundCheck;
 
     public override void _Ready()
     {
         Input.SetMouseMode(Input.MouseMode.Captured);
         Head = GetNode<Spatial>("Head");
-        GroundCheck = GetNode<RayCast>("GroundCheck");
     }
 
     public override void _Input(InputEvent @event)
@@ -57,8 +55,8 @@ public class Player : KinematicBody, IDebuggable
     {
         return new Dictionary<string, object>()
         {
-            { "Ground Check", GroundCheck.IsColliding().ToString() },
-            { "Velocity (y)", Velocity.y }
+            { "Velocity", Velocity },
+            { "Direction", Direction }
         };
     }
     
@@ -90,7 +88,7 @@ public class Player : KinematicBody, IDebuggable
         }
         
         Direction = Direction.Normalized();
-
+        
         Velocity.y -= Gravity * delta;
         if (Velocity.y < -MaxGravity) 
         {
@@ -104,11 +102,10 @@ public class Player : KinematicBody, IDebuggable
 
         int currAccelaration = IsOnFloor() ? Accelaration : AirAccelaration;
         int currSpeed = Input.IsActionPressed("sprint") ? SprintSpeed : Speed;
+        
         //NOTA: Pensa alla interpolazione lineare tra due colori
         Velocity = Velocity.LinearInterpolate(Direction * currSpeed, currAccelaration * delta);
 
-        
-
-        Velocity = MoveAndSlide(Velocity, Vector3.Up);
+        MoveAndSlide(Velocity, Vector3.Up, true);
     }
 }

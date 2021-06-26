@@ -22,7 +22,7 @@ public class Console : Control
         Dictionary<string, object> debugData = EntityDebuggable.GetDebugData();
         foreach(KeyValuePair<string, object> entry in debugData)
         {
-            Monitor.Text += $"{entry.Key}: {entry.Value}\n";
+            Monitor.Text += $"{entry.Key}: {entry.Value.ToString()}\n";
         }
     }
 }
