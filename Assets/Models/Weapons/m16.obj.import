@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/m16.obj-79af6e533d6f12ccce6854ec2522ea07.mesh"
+
+[deps]
+
+files=[ "res://.import/m16.obj-79af6e533d6f12ccce6854ec2522ea07.mesh" ]
+
+source_file="res://Assets/Models/Weapons/m16.obj"
+dest_files=[ "res://.import/m16.obj-79af6e533d6f12ccce6854ec2522ea07.mesh", "res://.import/m16.obj-79af6e533d6f12ccce6854ec2522ea07.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
