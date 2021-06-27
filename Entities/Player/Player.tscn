@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Entities/Player/Player.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Models/Weapons/m16.obj" type="ArrayMesh" id=2]
@@ -11,6 +11,9 @@ mid_height = 1.5
 [sub_resource type="CapsuleShape" id=2]
 radius = 0.5
 height = 1.53704
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0.235294, 0.235294, 0.235294, 1 )
 
 [node name="Player" type="KinematicBody"]
 script = ExtResource( 1 )
@@ -29,9 +32,15 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
 
 [node name="Camera" type="Camera" parent="Head"]
 
-[node name="m16" type="MeshInstance" parent="Head"]
-transform = Transform( -4.37114e-09, 0, 0.1, 0, 0.1, 0, -0.1, 0, -4.37114e-09, 0.246, -0.226, -0.774 )
+[node name="HandLoc" type="Spatial" parent="Head"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.235, -0.217, -0.486 )
+
+[node name="Hand" type="Spatial" parent="Head"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.235, -0.217, -0.486 )
+
+[node name="Weapon" type="MeshInstance" parent="Head/Hand"]
+transform = Transform( -4.37114e-09, 0, 0.1, 0, 0.1, 0, -0.1, 0, -4.37114e-09, 0.0107778, -0.0123198, -0.287828 )
 mesh = ExtResource( 2 )
-material/0 = null
+material/0 = SubResource( 3 )
 
 [node name="Player_HUD" parent="." instance=ExtResource( 3 )]

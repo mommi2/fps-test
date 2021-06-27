@@ -31,11 +31,19 @@ public class Player : KinematicBody, IDebuggable
     private Vector3 Velocity;
     private Vector3 Direction;
     private Spatial Head;
+    private Spatial HandLoc;
+    private Spatial Hand;
+    private int Sway = 50;
 
     public override void _Ready()
     {
         Input.SetMouseMode(Input.MouseMode.Captured);
         Head = GetNode<Spatial>("Head");
+        HandLoc = Head.GetNode<Spatial>("HandLoc");
+        Hand = Head.GetNode<Spatial>("Hand");
+
+        Hand.SetAsToplevel(true);
+
     }
 
     public override void _Input(InputEvent @event)
@@ -60,6 +68,16 @@ public class Player : KinematicBody, IDebuggable
         };
     }
     
+    public override void _Process(float delta)
+    {
+        Hand.GlobalTransform = new Transform(Hand.GlobalTransform.basis, HandLoc.GlobalTransform.origin);
+        
+        Vector3 handRotation = Hand.Rotation;
+        handRotation.x = Mathf.LerpAngle(Hand.Rotation.x, Head.Rotation.x, Sway * delta);
+        handRotation.y = Mathf.LerpAngle(Hand.Rotation.y, Rotation.y, Sway * delta);
+        Hand.Rotation = handRotation;
+    }
+
     public override void _PhysicsProcess(float delta)
     {
         Direction = Vector3.Zero;
