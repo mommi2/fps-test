@@ -16,6 +16,7 @@ __meta__ = {
 [node name="Panel" type="Panel" parent="."]
 anchor_bottom = 1.0
 margin_right = 320.0
+margin_bottom = -256.0
 custom_styles/panel = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -35,7 +36,7 @@ __meta__ = {
 margin_left = 8.0
 margin_top = 32.0
 margin_right = 312.0
-margin_bottom = 592.0
+margin_bottom = 328.0
 scroll_active = false
 __meta__ = {
 "_edit_use_anchors_": false
