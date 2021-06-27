@@ -8,16 +8,14 @@ bg_color = Color( 0, 0, 0, 0.0862745 )
 [node name="Console" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = -624.0
-margin_bottom = -200.0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Panel" type="Panel" parent="."]
-anchor_right = 1.0
 anchor_bottom = 1.0
+margin_right = 320.0
 custom_styles/panel = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -28,7 +26,7 @@ margin_left = 10.0
 margin_top = 10.0
 margin_right = 96.0
 margin_bottom = 14.0
-text = "Properties"
+text = "Console"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -36,8 +34,8 @@ __meta__ = {
 [node name="Monitor" type="RichTextLabel" parent="."]
 margin_left = 8.0
 margin_top = 32.0
-margin_right = 384.0
-margin_bottom = 384.0
+margin_right = 312.0
+margin_bottom = 592.0
 scroll_active = false
 __meta__ = {
 "_edit_use_anchors_": false

@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Entities/Player/Player.cs" type="Script" id=1]
+[ext_resource path="res://Models/Weapons/m16.obj" type="ArrayMesh" id=2]
 
 [sub_resource type="CapsuleMesh" id=1]
 radius = 0.5
@@ -26,3 +27,8 @@ shape = SubResource( 2 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
 
 [node name="Camera" type="Camera" parent="Head"]
+
+[node name="m16" type="MeshInstance" parent="Head"]
+transform = Transform( 0.00346379, 0, 0.09994, 0, 0.1, 0, -0.09994, 0, 0.00346379, 0.369, -0.217, -0.845 )
+mesh = ExtResource( 2 )
+material/0 = null
