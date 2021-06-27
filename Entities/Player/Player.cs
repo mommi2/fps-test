@@ -42,11 +42,11 @@ public class Player : KinematicBody, IDebuggable
     {
         if (@event is InputEventMouseMotion eventMouseMotion) 
         {
-            RotateY(Godot.Mathf.Deg2Rad(-eventMouseMotion.Relative.x * MouseSensitivity));
-            Head.RotateX(Godot.Mathf.Deg2Rad(-eventMouseMotion.Relative.y * MouseSensitivity));
+            RotateY(Mathf.Deg2Rad(-eventMouseMotion.Relative.x * MouseSensitivity));
+            Head.RotateX(Mathf.Deg2Rad(-eventMouseMotion.Relative.y * MouseSensitivity));
 
             Vector3 headRotation = Head.Rotation;
-            headRotation.x = Godot.Mathf.Clamp(Head.Rotation.x, Godot.Mathf.Deg2Rad(-89), Godot.Mathf.Deg2Rad(89));
+            headRotation.x = Mathf.Clamp(Head.Rotation.x, Mathf.Deg2Rad(-89), Mathf.Deg2Rad(89));
             Head.Rotation = headRotation;
         }
     }
@@ -64,9 +64,12 @@ public class Player : KinematicBody, IDebuggable
     {
         Direction = Vector3.Zero;
 
-        if (Input.IsActionPressed("ui_cancel"))
+        if (Input.IsActionJustPressed("ui_cancel"))
         {
-            Input.SetMouseMode(Input.MouseMode.Visible);
+            if (Input.GetMouseMode() == Input.MouseMode.Visible)
+                Input.SetMouseMode(Input.MouseMode.Captured);
+            else
+                Input.SetMouseMode(Input.MouseMode.Visible);
         }
 
         // =================================== TASTI DIREZIONALI ===================================
