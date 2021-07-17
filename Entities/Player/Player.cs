@@ -34,6 +34,7 @@ public class Player : KinematicBody, IDebuggable
     private Spatial HandLoc;
     private Spatial Hand;
     private int Sway = 50;
+    private Vector3 Snap = Vector3.Zero;
 
     public override void _Ready()
     {
@@ -84,10 +85,7 @@ public class Player : KinematicBody, IDebuggable
 
         if (Input.IsActionJustPressed("ui_cancel"))
         {
-            if (Input.GetMouseMode() == Input.MouseMode.Visible)
-                Input.SetMouseMode(Input.MouseMode.Captured);
-            else
-                Input.SetMouseMode(Input.MouseMode.Visible);
+            Input.SetMouseMode(Input.GetMouseMode() == Input.MouseMode.Visible ? Input.MouseMode.Captured : Input.MouseMode.Visible);
         }
 
         // =================================== TASTI DIREZIONALI ===================================
@@ -111,22 +109,24 @@ public class Player : KinematicBody, IDebuggable
         Direction = Direction.Normalized();
         
         Velocity.y -= Gravity * delta;
-        if (Velocity.y < -MaxGravity) 
-        {
-            Velocity.y = -MaxGravity;
-        }
+        Velocity.y = (Velocity.y < -MaxGravity) ? Velocity.y = -MaxGravity : Velocity.y;
 
         if (Input.IsActionJustPressed("jump") && IsOnFloor())
         {
             Velocity.y = JumpVelocity;
+            Snap = Vector3.Zero;
+        }
+        else
+        {
+            Snap = Vector3.Down;
         }
 
         int currAccelaration = IsOnFloor() ? Accelaration : AirAccelaration;
         int currSpeed = Input.IsActionPressed("sprint") ? SprintSpeed : Speed;
         
-        //NOTA: Pensa alla interpolazione lineare tra due colori
+        //NOTA: Pensa all'interpolazione lineare tra due colori
         Velocity = Velocity.LinearInterpolate(Direction * currSpeed, currAccelaration * delta);
 
-        MoveAndSlide(Velocity, Vector3.Up, true);
+        MoveAndSlideWithSnap(Velocity, Snap, Vector3.Up, true);
     }
 }
