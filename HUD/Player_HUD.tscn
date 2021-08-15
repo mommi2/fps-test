@@ -1,9 +1,14 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Assets/HUD/crosshair.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Fonts/Play-Regular.ttf" type="DynamicFontData" id=2]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 0.121569 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 40
+font_data = ExtResource( 2 )
 
 [node name="Player_HUD" type="Control"]
 anchor_right = 1.0
@@ -36,11 +41,14 @@ margin_left = -216.0
 margin_top = -56.0
 custom_styles/panel = SubResource( 1 )
 
-[node name="Label" type="Label" parent="PanelContainer"]
-margin_left = 88.0
-margin_top = 32.0
-margin_right = 208.0
-margin_bottom = 46.0
+[node name="AmmoCounter" type="Label" parent="PanelContainer"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 12.0
+margin_top = -23.5
+margin_right = 132.0
+margin_bottom = 23.5
+custom_fonts/font = SubResource( 2 )
 text = "00/000"
 align = 2
 __meta__ = {
