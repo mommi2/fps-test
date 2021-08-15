@@ -61,34 +61,38 @@ public class Player : KinematicBody, IDebuggable
         };
     }
 
+    private Vector3 GetInputDirection()
+    {
+        Vector3 direction = Vector3.Zero;
+
+        if (Input.IsActionPressed("move_forward"))
+        {
+            direction -= Transform.basis.z;
+        }
+        if (Input.IsActionPressed("move_backward"))
+        {
+            direction += Transform.basis.z;
+        }
+        if (Input.IsActionPressed("move_left"))
+        {
+            direction -= Transform.basis.x;
+        }
+        if (Input.IsActionPressed("move_right"))
+        {
+            direction += Transform.basis.x;
+        }
+
+        return direction.Normalized();
+    }
+
     public override void _PhysicsProcess(float delta)
     {
-        Direction = Vector3.Zero;
-
         if (Input.IsActionJustPressed("ui_cancel"))
         {
             Input.SetMouseMode(Input.GetMouseMode() == Input.MouseMode.Visible ? Input.MouseMode.Captured : Input.MouseMode.Visible);
         }
 
-        // =================================== TASTI DIREZIONALI ===================================
-        if (Input.IsActionPressed("move_forward"))
-        {
-            Direction -= Transform.basis.z;
-        }
-        if (Input.IsActionPressed("move_backward"))
-        {
-            Direction += Transform.basis.z;
-        }
-        if (Input.IsActionPressed("move_left"))
-        {
-            Direction -= Transform.basis.x;
-        }
-        if (Input.IsActionPressed("move_right"))
-        {
-            Direction += Transform.basis.x;
-        }
-        
-        Direction = Direction.Normalized();
+        Direction = GetInputDirection();
         
         Velocity.y -= Gravity * delta;
         Velocity.y = (Velocity.y < -MaxGravity) ? Velocity.y = -MaxGravity : Velocity.y;
