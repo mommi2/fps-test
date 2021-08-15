@@ -1,9 +1,9 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Entities/Player/Player.cs" type="Script" id=1]
-[ext_resource path="res://Assets/Models/Weapons/m16.obj" type="ArrayMesh" id=2]
 [ext_resource path="res://HUD/Player_HUD.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Entities/Player/WeaponCamera.cs" type="Script" id=4]
+[ext_resource path="res://Entities/Weapons/Guns/Rilfes/M16/Rifle_M16.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CapsuleMesh" id=1]
 radius = 0.5
@@ -13,10 +13,7 @@ mid_height = 1.5
 radius = 0.5
 height = 1.5
 
-[sub_resource type="SpatialMaterial" id=3]
-albedo_color = Color( 0.235294, 0.235294, 0.235294, 1 )
-
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 resource_name = "Bob"
 loop = true
 
@@ -41,11 +38,7 @@ cull_mask = 1048573
 [node name="Hand" type="Spatial" parent="Head"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.235, -0.236, -0.764 )
 
-[node name="Weapon" type="MeshInstance" parent="Head/Hand"]
-transform = Transform( -4.37114e-09, 0, 0.1, 0, 0.1, 0, -0.1, 0, -4.37114e-09, 0, 0, 0 )
-layers = 2
-mesh = ExtResource( 2 )
-material/0 = SubResource( 3 )
+[node name="Rifle_M16" parent="Head/Hand" instance=ExtResource( 5 )]
 
 [node name="ViewportContainer" type="ViewportContainer" parent="."]
 anchor_right = 1.0
@@ -70,4 +63,4 @@ MainCameraPath = NodePath("../../../Head/Camera")
 [node name="Player_HUD" parent="." instance=ExtResource( 3 )]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Bob = SubResource( 4 )
+anims/Bob = SubResource( 3 )
