@@ -14,12 +14,19 @@ public class M16 : MeshInstance, IGun, IEquipable
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(float delta)
     {
-        
+        if (Input.IsActionPressed("shoot"))
+        {
+            Shoot();
+        }
+        if (Input.IsActionPressed("reload"))
+        {
+            Reload();
+        }
     }
 
-    public void Fire()
+    public void Shoot()
     {
-        GD.Print("M16 fire");
+        GD.Print("M16 shoot");
     }
 
     public void Reload()

@@ -19,7 +19,7 @@ public class M1911 : MeshInstance, IGun, IEquipable
         
     }
 
-    public void Fire()
+    public void Shoot()
     {
         GD.Print("M1911 fire");
     }

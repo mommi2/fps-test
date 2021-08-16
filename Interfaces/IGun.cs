@@ -2,7 +2,7 @@ using System;
 
 public interface IGun
 {
-    void Fire();
+    void Shoot();
     void Reload();
     Boolean IsReloading();
     Boolean IsFiring();
