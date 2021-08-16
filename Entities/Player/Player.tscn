@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Entities/Player/Player.cs" type="Script" id=1]
+[ext_resource path="res://Entities/Player/Hand.cs" type="Script" id=2]
 [ext_resource path="res://HUD/Player_HUD.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Entities/Player/WeaponCamera.cs" type="Script" id=4]
-[ext_resource path="res://Entities/Weapons/Guns/Rilfes/M16/Rifle_M16.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CapsuleMesh" id=1]
 radius = 0.5
@@ -37,8 +37,7 @@ cull_mask = 1048573
 
 [node name="Hand" type="Spatial" parent="Head"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.235, -0.236, -0.764 )
-
-[node name="Rifle_M16" parent="Head/Hand" instance=ExtResource( 5 )]
+script = ExtResource( 2 )
 
 [node name="ViewportContainer" type="ViewportContainer" parent="."]
 anchor_right = 1.0
