@@ -15,7 +15,7 @@ config/icon="res://icon.png"
 
 [autoload]
 
-EventsBus="*res://Util/EventsBus.cs"
+EventsBus="*res://Common/EventsBus.cs"
 
 [input]
 

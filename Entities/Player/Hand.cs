@@ -11,10 +11,7 @@ public class Hand : Spatial
         Primary = GetNode<Spatial>("Primary");
         Secondary = GetNode<Spatial>("Secondary");
 
-        M16 m16 = ResourceLoader.Load<PackedScene>("res://Entities/Weapons/Guns/Rilfes/M16/M16.tscn").Instance<M16>();
-        m16.AmmoManager = new AmmoManager(30, 30, 160);
-        m16.Connect("Equipped", this, "test");
-        EquipWeapon(m16);
+        GetNode<EventsBus>(Constants.NodePath.EventsBus).Connect("HudReady", this, "OnHudReady");
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -23,9 +20,11 @@ public class Hand : Spatial
         
     }
 
-    public void test()
+    private void OnHudReady()
     {
-        GD.Print("m16 equipped from hand");
+        M16 m16 = ResourceLoader.Load<PackedScene>(Constants.Scene.M16).Instance<M16>();
+        m16.AmmoManager = new AmmoManager(30, 30, 160);
+        EquipWeapon(m16);
     }
 
     public void EquipWeapon(EquipableGun equipableWeapon)
