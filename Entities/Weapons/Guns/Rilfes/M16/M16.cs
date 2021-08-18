@@ -29,7 +29,7 @@ public class M16 : EquipableGun
     public override void Shoot()
     {
         GD.Print("M16 shoot");
-        AmmoManager.UpdateAmmo();
+        AmmoManager.Consume();
         GetNode<EventsBus>(Constants.NodePath.EventsBus).EmitSignal("GunAmmoChanged", AmmoManager);
     }
 

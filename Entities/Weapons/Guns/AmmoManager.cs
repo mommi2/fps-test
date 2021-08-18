@@ -38,7 +38,7 @@ public class AmmoManager : Node, IAmmoManager
         AmmoMagazine = ammoToReload;
     }
 
-    public void UpdateAmmo()
+    public void Consume()
     {
         if (AmmoMagazine == 0) return;
         AmmoMagazine = AmmoMagazine - 1;
