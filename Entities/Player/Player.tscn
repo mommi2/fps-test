@@ -42,6 +42,7 @@ script = ExtResource( 2 )
 [node name="Primary" type="Spatial" parent="Head/Hand"]
 
 [node name="Secondary" type="Spatial" parent="Head/Hand"]
+visible = false
 
 [node name="ViewportContainer" type="ViewportContainer" parent="."]
 anchor_right = 1.0

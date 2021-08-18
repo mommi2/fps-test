@@ -22,20 +22,17 @@ public class AmmoManager : Node, IAmmoManager
     {
         if (IsMagazineFull()) return;
         int ammoNeeded = MagazineSize - AmmoMagazine;
-        int ammoToReload = 0;
 
         if (ammoNeeded > ExtraAmmo)
         {
-            ammoToReload = AmmoMagazine + ExtraAmmo;
+            AmmoMagazine += ExtraAmmo;
             ExtraAmmo = 0;
         }
         else
         {
-            ammoToReload = MagazineSize;
-            ExtraAmmo = ExtraAmmo - ammoNeeded;
+            AmmoMagazine = MagazineSize;
+            ExtraAmmo -= ammoNeeded;
         }
-        
-        AmmoMagazine = ammoToReload;
     }
 
     public void Consume()
