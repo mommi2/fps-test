@@ -28,11 +28,11 @@ public class Hand : Spatial
 
     public override void _Input(InputEvent @event)
     {
-        if (@event is InputEventMouseButton eventMouseMotion)
+        if (@event is InputEventMouseButton eventMouseButton)
         {
-            if (eventMouseMotion.Pressed)
+            if (eventMouseButton.Pressed)
             {
-                switch (eventMouseMotion.ButtonIndex)
+                switch (eventMouseButton.ButtonIndex)
                 {
                     case ((int)ButtonList.WheelUp):
                         NextWeapon();
