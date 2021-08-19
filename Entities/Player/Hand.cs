@@ -3,13 +3,16 @@ using System;
 
 public class Hand : Spatial
 {
-    private EquipableGun[] GunCarried = new EquipableGun[MaxSlots];
+    [Export]
+    public int MaxSlots;
+    private EquipableGun[] GunCarried;
     private int CurrentSlot = 0;
-    public const int MaxSlots = 2;
-    private Spatial[] Slots = new Spatial[MaxSlots];
+    private Spatial[] Slots;
     
     public override void _Ready()
     {
+        GunCarried = new EquipableGun[MaxSlots];
+        Slots = new Spatial[MaxSlots];
         GetNode<EventsBus>(Constants.NodePath.EventsBus).Connect("HudReady", this, "OnHudReady");
         for (int i = 0; i < MaxSlots; i++)
         {
@@ -44,7 +47,7 @@ public class Hand : Spatial
 
     public void NextWeapon()
     {
-        if (CurrentSlot + 1 == MaxSlots) return;
+        if (CurrentSlot + 1 >= MaxSlots) return;
         GunCarried[CurrentSlot].Unequip();
         Slots[CurrentSlot].Visible = false;
         CurrentSlot++;

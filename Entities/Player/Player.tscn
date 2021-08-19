@@ -38,6 +38,7 @@ cull_mask = 1048573
 [node name="Hand" type="Spatial" parent="Head"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.235, -0.236, -0.764 )
 script = ExtResource( 2 )
+MaxSlots = 2
 
 [node name="Slot_0" type="Spatial" parent="Head/Hand"]
 
