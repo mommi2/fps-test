@@ -39,9 +39,9 @@ cull_mask = 1048573
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.235, -0.236, -0.764 )
 script = ExtResource( 2 )
 
-[node name="Primary" type="Spatial" parent="Head/Hand"]
+[node name="Slot_0" type="Spatial" parent="Head/Hand"]
 
-[node name="Secondary" type="Spatial" parent="Head/Hand"]
+[node name="Slot_1" type="Spatial" parent="Head/Hand"]
 visible = false
 
 [node name="ViewportContainer" type="ViewportContainer" parent="."]

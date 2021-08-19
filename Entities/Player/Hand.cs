@@ -3,15 +3,18 @@ using System;
 
 public class Hand : Spatial
 {
-    private Spatial Primary;
-    private Spatial Secondary;
+    private EquipableGun[] GunCarried = new EquipableGun[MaxSlots];
+    private int CurrentSlot = 0;
+    public const int MaxSlots = 2;
+    private Spatial[] Slots = new Spatial[MaxSlots];
     
     public override void _Ready()
     {
-        Primary = GetNode<Spatial>("Primary");
-        Secondary = GetNode<Spatial>("Secondary");
-
         GetNode<EventsBus>(Constants.NodePath.EventsBus).Connect("HudReady", this, "OnHudReady");
+        for (int i = 0; i < MaxSlots; i++)
+        {
+            Slots[i] = GetNode<Spatial>($"Slot_{i}");
+        }
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -20,16 +23,69 @@ public class Hand : Spatial
         
     }
 
+    public override void _Input(InputEvent @event)
+    {
+        if (@event is InputEventMouseButton eventMouseMotion)
+        {
+            if (eventMouseMotion.Pressed)
+            {
+                switch (eventMouseMotion.ButtonIndex)
+                {
+                    case ((int)ButtonList.WheelUp):
+                        NextWeapon();
+                        break;
+                    case ((int)ButtonList.WheelDown):
+                        PreviousWeapon();
+                        break;
+                }
+            }
+        }
+    }
+
+    public void NextWeapon()
+    {
+        if (CurrentSlot + 1 == MaxSlots) return;
+        GunCarried[CurrentSlot].Unequip();
+        Slots[CurrentSlot].Visible = false;
+        CurrentSlot++;
+        Slots[CurrentSlot].Visible = true;
+        GunCarried[CurrentSlot].Equip();
+    }
+
+    public void PreviousWeapon()
+    {
+        if (CurrentSlot - 1 < 0) return;
+        GunCarried[CurrentSlot].Unequip();
+        Slots[CurrentSlot].Visible = false;
+        CurrentSlot--;
+        Slots[CurrentSlot].Visible = true;
+        GunCarried[CurrentSlot].Equip();
+    }
+
     private void OnHudReady()
     {
         M16 m16 = ResourceLoader.Load<PackedScene>(Constants.Scene.M16).Instance<M16>();
-        m16.AmmoManager = new AmmoManager(30, 30, 160);
-        EquipWeapon(m16);
+        M1911 m1911 = ResourceLoader.Load<PackedScene>(Constants.Scene.M1911).Instance<M1911>();
+        m1911.AmmoManager = new AmmoManager(ammoMagazine: 10, magazineSize: 10, extraAmmo: 60);
+        m16.AmmoManager = new AmmoManager(ammoMagazine: 30, magazineSize: 30, extraAmmo: 160);
+        PutAllWeapons(new EquipableGun[] {m16, m1911});
     }
 
-    public void EquipWeapon(EquipableGun equipableWeapon)
+    public void PutAllWeapons(EquipableGun[] weapons)
     {
-        Primary.AddChild(equipableWeapon);
-        equipableWeapon.Equip();
+        for (int i = 0; i < MaxSlots; i++)
+        {
+            GunCarried[i] = weapons[i];
+            Slots[i].AddChild(weapons[i]);
+            
+        }
+        weapons[0].Equip();
+    }
+
+    public void EquipWeapon(int slotIndex, EquipableGun weapon)
+    {
+        GunCarried[slotIndex] = weapon;
+        Slots[slotIndex].AddChild(weapon);
+        weapon.Equip();
     }
 }
