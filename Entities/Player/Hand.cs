@@ -48,21 +48,17 @@ public class Hand : Spatial
     public void NextWeapon()
     {
         if (CurrentSlot + 1 >= MaxSlots) return;
-        GunCarried[CurrentSlot].Unequip();
-        Slots[CurrentSlot].Visible = false;
+        UnequipWeapon(CurrentSlot);
         CurrentSlot++;
-        Slots[CurrentSlot].Visible = true;
-        GunCarried[CurrentSlot].Equip();
+        EquipWeapon(CurrentSlot);
     }
 
     public void PreviousWeapon()
     {
         if (CurrentSlot - 1 < 0) return;
-        GunCarried[CurrentSlot].Unequip();
-        Slots[CurrentSlot].Visible = false;
+        UnequipWeapon(CurrentSlot);
         CurrentSlot--;
-        Slots[CurrentSlot].Visible = true;
-        GunCarried[CurrentSlot].Equip();
+        EquipWeapon(CurrentSlot);
     }
 
     private void OnHudReady()
@@ -76,7 +72,8 @@ public class Hand : Spatial
 
     public void PutAllWeapons(EquipableGun[] weapons)
     {
-        for (int i = 0; i < MaxSlots; i++)
+        int maxWeapons = MaxSlots >= weapons.Length? weapons.Length : MaxSlots;
+        for (int i = 0; i < maxWeapons; i++)
         {
             GunCarried[i] = weapons[i];
             Slots[i].AddChild(weapons[i]);
@@ -85,10 +82,15 @@ public class Hand : Spatial
         weapons[0].Equip();
     }
 
-    public void EquipWeapon(int slotIndex, EquipableGun weapon)
+    public void UnequipWeapon(int slotIndex)
     {
-        GunCarried[slotIndex] = weapon;
-        Slots[slotIndex].AddChild(weapon);
-        weapon.Equip();
+        GunCarried[slotIndex].Unequip();
+        Slots[slotIndex].Visible = false;
+    }
+
+    public void EquipWeapon(int slotIndex)
+    {
+        Slots[slotIndex].Visible = true;
+        GunCarried[slotIndex].Equip();
     }
 }
