@@ -73,13 +73,16 @@ public class Hand : Spatial
     public void PutAllWeapons(EquipableGun[] weapons)
     {
         int maxWeapons = MaxSlots >= weapons.Length? weapons.Length : MaxSlots;
+
+        if (maxWeapons == 0) return;
+        
         for (int i = 0; i < maxWeapons; i++)
         {
             GunCarried[i] = weapons[i];
             Slots[i].AddChild(weapons[i]);
             
         }
-        weapons[0].Equip();
+        GunCarried[0].Equip();
     }
 
     public void UnequipWeapon(int slotIndex)
