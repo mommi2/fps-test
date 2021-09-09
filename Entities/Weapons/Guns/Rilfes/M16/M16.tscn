@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Assets/Models/Weapons/m16.obj" type="ArrayMesh" id=1]
 [ext_resource path="res://Entities/Weapons/Guns/Rilfes/M16/M16.cs" type="Script" id=2]
 [ext_resource path="res://Assets/Models/Weapons/m_default_weapon.tres" type="Material" id=3]
+[ext_resource path="res://Particles/ShootParticles.tscn" type="PackedScene" id=4]
 
 [node name="Rifle_M16" type="MeshInstance"]
 transform = Transform( -4.37114e-09, 0, 0.1, 0, 0.1, 0, -0.1, 0, -4.37114e-09, 0, 0, 0 )
@@ -10,3 +11,7 @@ layers = 2
 mesh = ExtResource( 1 )
 material/0 = ExtResource( 3 )
 script = ExtResource( 2 )
+ShootParticlesPath = NodePath("ShootParticles")
+
+[node name="ShootParticles" parent="." instance=ExtResource( 4 )]
+transform = Transform( 6, 0, 2.46321e-13, 0, 5, 0, -3.69482e-13, 0, 4, 7.15713, 0.559506, 3.12848e-07 )

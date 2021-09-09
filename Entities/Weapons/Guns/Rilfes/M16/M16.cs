@@ -4,10 +4,12 @@ using System;
 public class M16 : EquipableGun
 {
 
+    private Particles ShootParticles;
+
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        GD.Print("M16");
+        ShootParticles = GetNode<Particles>(ShootParticlesPath);
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -30,6 +32,7 @@ public class M16 : EquipableGun
     {
         GD.Print("M16 shoot");
         AmmoManager.Consume();
+        ShootParticles.Emitting = true;
         GetNode<EventsBus>(Constants.NodePath.EventsBus).EmitSignal("GunAmmoChanged", AmmoManager);
     }
 

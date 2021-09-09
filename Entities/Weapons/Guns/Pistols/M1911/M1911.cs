@@ -3,9 +3,11 @@ using System;
 
 public class M1911 : EquipableGun
 {
+    private Particles ShootParticles;
+
     public override void _Ready()
     {
-        GD.Print("M1911");
+        ShootParticles = GetNode<Particles>(ShootParticlesPath);
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -28,6 +30,7 @@ public class M1911 : EquipableGun
     {
         GD.Print("M1911 shoot");
         AmmoManager.Consume();
+        ShootParticles.Emitting = true;
         GetNode<EventsBus>(Constants.NodePath.EventsBus).EmitSignal("GunAmmoChanged", AmmoManager);
     }
 
