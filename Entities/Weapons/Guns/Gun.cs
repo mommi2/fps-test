@@ -9,6 +9,7 @@ public abstract class Gun : MeshInstance, IGun
     [Export]
     protected NodePath ShootParticlesPath;
 
+    protected Particles ShootParticles;
     public Boolean IsFiring { get; }
     public Boolean IsReloading { get; }    
     public AmmoManager AmmoManager { get; set; }

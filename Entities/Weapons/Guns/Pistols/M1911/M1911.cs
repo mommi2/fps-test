@@ -3,8 +3,6 @@ using System;
 
 public class M1911 : EquipableGun
 {
-    private Particles ShootParticles;
-
     public override void _Ready()
     {
         ShootParticles = GetNode<Particles>(ShootParticlesPath);
