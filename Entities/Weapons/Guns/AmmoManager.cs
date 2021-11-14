@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class AmmoManager : Node, IAmmoManager
+public class AmmoManager : Godot.Object, IAmmoManager
 {   
     public int AmmoMagazine { get; set; }
     public int MagazineSize { get; set; }

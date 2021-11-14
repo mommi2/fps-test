@@ -1,4 +1,4 @@
-public interface IEquipable
+public interface IEquipableWeapon
 {
     void Equip();
     void Unequip();

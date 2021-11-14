@@ -5,13 +5,13 @@ public class Hand : Spatial
 {
     [Export]
     public int MaxSlots;
-    private EquipableGun[] GunCarried;
+    private IEquipableWeapon[] WeaponsCarried;
     private int CurrentSlot = 0;
     private Spatial[] Slots;
     
     public override void _Ready()
     {
-        GunCarried = new EquipableGun[MaxSlots];
+        WeaponsCarried = new IEquipableWeapon[MaxSlots];
         Slots = new Spatial[MaxSlots];
         GetNode<EventsBus>(Constants.NodePath.EventsBus).Connect("HudReady", this, "OnHudReady");
         for (int i = 0; i < MaxSlots; i++)
@@ -67,10 +67,10 @@ public class Hand : Spatial
         M1911 m1911 = ResourceLoader.Load<PackedScene>(Constants.Scene.M1911).Instance<M1911>();
         m1911.AmmoManager = new AmmoManager(ammoMagazine: 10, magazineSize: 10, extraAmmo: 60);
         m16.AmmoManager = new AmmoManager(ammoMagazine: 30, magazineSize: 30, extraAmmo: 160);
-        PutAllWeapons(new EquipableGun[] {m16, m1911});
+        PutAllGuns(new EquipableGun[] {m16, m1911});
     }
 
-    public void PutAllWeapons(EquipableGun[] weapons)
+    public void PutAllGuns(EquipableGun[] weapons)
     {
         int maxWeapons = MaxSlots >= weapons.Length? weapons.Length : MaxSlots;
 
@@ -78,22 +78,22 @@ public class Hand : Spatial
         
         for (int i = 0; i < maxWeapons; i++)
         {
-            GunCarried[i] = weapons[i];
+            WeaponsCarried[i] = weapons[i];
             Slots[i].AddChild(weapons[i]);
             
         }
-        GunCarried[0].Equip();
+        WeaponsCarried[0].Equip();
     }
 
     public void UnequipWeapon(int slotIndex)
     {
-        GunCarried[slotIndex].Unequip();
+        WeaponsCarried[slotIndex].Unequip();
         Slots[slotIndex].Visible = false;
     }
 
     public void EquipWeapon(int slotIndex)
     {
         Slots[slotIndex].Visible = true;
-        GunCarried[slotIndex].Equip();
+        WeaponsCarried[slotIndex].Equip();
     }
 }
