@@ -5,13 +5,11 @@ public class Hand : Spatial
 {
     [Export]
     public int MaxSlots;
-    private IEquipableWeapon[] WeaponsCarried;
     private int CurrentSlot = 0;
     private Spatial[] Slots;
     
     public override void _Ready()
     {
-        WeaponsCarried = new IEquipableWeapon[MaxSlots];
         Slots = new Spatial[MaxSlots];
         GetNode<EventsBus>(Constants.NodePath.EventsBus).Connect("HudReady", this, "OnHudReady");
         for (int i = 0; i < MaxSlots; i++)
@@ -78,22 +76,20 @@ public class Hand : Spatial
         
         for (int i = 0; i < maxWeapons; i++)
         {
-            WeaponsCarried[i] = weapons[i];
             Slots[i].AddChild(weapons[i]);
-            
         }
-        WeaponsCarried[0].Equip();
+        Slots[0].GetChild<IEquipableWeapon>(0).Equip();
     }
 
     public void UnequipWeapon(int slotIndex)
     {
-        WeaponsCarried[slotIndex].Unequip();
+        Slots[slotIndex].GetChild<IEquipableWeapon>(0).Unequip();
         Slots[slotIndex].Visible = false;
     }
 
     public void EquipWeapon(int slotIndex)
     {
         Slots[slotIndex].Visible = true;
-        WeaponsCarried[slotIndex].Equip();
+        Slots[slotIndex].GetChild<IEquipableWeapon>(0).Equip();
     }
 }
