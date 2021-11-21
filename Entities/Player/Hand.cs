@@ -62,10 +62,10 @@ public class Hand : Spatial
     private void OnHudReady()
     {
         M16 m16 = ResourceLoader.Load<PackedScene>(Constants.Scene.M16).Instance<M16>();
-        M1911 m1911 = ResourceLoader.Load<PackedScene>(Constants.Scene.M1911).Instance<M1911>();
-        m1911.AmmoManager = new AmmoManager(ammoMagazine: 10, magazineSize: 10, extraAmmo: 60);
+        //M1911 m1911 = ResourceLoader.Load<PackedScene>(Constants.Scene.M1911).Instance<M1911>();
+        //m1911.AmmoManager = new AmmoManager(ammoMagazine: 10, magazineSize: 10, extraAmmo: 60);
         m16.AmmoManager = new AmmoManager(ammoMagazine: 30, magazineSize: 30, extraAmmo: 160);
-        PutAllGuns(new EquipableGun[] {m16, m1911});
+        PutAllGuns(new EquipableGun[] {m16});
     }
 
     public void PutAllGuns(EquipableGun[] weapons)

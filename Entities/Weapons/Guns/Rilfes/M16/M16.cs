@@ -7,6 +7,7 @@ public class M16 : EquipableGun
     public override void _Ready()
     {
         ShootParticles = GetNode<Particles>(ShootParticlesPath);
+        AnimationPlayer = GetNode<AnimationPlayer>(AnimationPlayerPath);
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -14,7 +15,7 @@ public class M16 : EquipableGun
     {   
         if (IsEquipped)
         {
-            if (Input.IsActionPressed("shoot") && AmmoManager.HasAmmoInMagazine()) Shoot();
+            if (Input.IsActionPressed("shoot") && AmmoManager.HasAmmoInMagazine() && !IsShooting()) Shoot();
             if (Input.IsActionPressed("reload") && !AmmoManager.IsMagazineFull()) Reload();
         }
     }
@@ -30,6 +31,7 @@ public class M16 : EquipableGun
         GD.Print("M16 shoot");
         AmmoManager.Consume();
         ShootParticles.Emitting = true;
+        AnimationPlayer.Play(Animations.Shooting);
         GetNode<EventsBus>(Constants.NodePath.EventsBus).EmitSignal("GunAmmoChanged", AmmoManager);
     }
 
@@ -44,5 +46,10 @@ public class M16 : EquipableGun
     {
         GD.Print("M16 unequip");
         IsEquipped = false;
+    }
+
+    public override bool IsShooting()
+    {
+        return AnimationPlayer.IsPlaying() && AnimationPlayer.CurrentAnimation == Animations.Shooting;
     }
 }

@@ -44,4 +44,9 @@ public class M1911 : EquipableGun
         GD.Print("M1911 unequip");
         IsEquipped = false;
     }
+
+    public override bool IsShooting()
+    {
+        throw new NotImplementedException();
+    }
 }
