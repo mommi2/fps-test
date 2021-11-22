@@ -19,17 +19,16 @@ surfaces/0 = {
 "vertex_count": 2835
 }
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=3]
 resource_name = "Shooting"
 length = 0.1
-step = 0.025
 tracks/0/type = "transform"
 tracks/0/path = NodePath("Mesh")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/keys = PoolRealArray( 0, 1, 0.246847, -0.17, -0.932431, 0.515058, 0.521049, -0.478025, 0.484474, 0.1, 0.1, 0.1, 0.0666667, 1, 0.246847, -0.17, -0.897874, 0.515058, 0.521049, -0.478025, 0.484474, 0.1, 0.1, 0.1, 0.1, 1, 0.246847, -0.17, -0.932431, 0.515058, 0.521049, -0.478025, 0.484474, 0.1, 0.1, 0.1 )
+tracks/0/keys = PoolRealArray( 0, 1, 0.197774, -0.192144, -0.877269, 0.502119, 0.526742, -0.492028, 0.477836, 0.1, 0.1, 0.1, 0.0666667, 1, 0.197774, -0.192144, -0.848729, 0.502119, 0.526742, -0.492028, 0.477836, 0.1, 0.1, 0.1, 0.1, 1, 0.197774, -0.192144, -0.877269, 0.502119, 0.526742, -0.492028, 0.477836, 0.1, 0.1, 0.1 )
 
 [node name="Rifle_M16" type="Spatial"]
 script = ExtResource( 2 )
@@ -37,13 +36,13 @@ ShootParticlesPath = NodePath("ShootParticles")
 AnimationPlayerPath = NodePath("AnimationPlayer")
 
 [node name="Mesh" type="MeshInstance" parent="."]
-transform = Transform( -1.19209e-08, 0.0999923, 0.00124477, 0.00735602, 0.0012414, -0.0997213, -0.0997291, 9.15557e-05, -0.00735545, 0.246847, -0.17, -0.932431 )
+transform = Transform( -0.0039097, 0.0999192, 0.000927886, 0.00587564, 0.00115688, -0.0998205, -0.0997506, -0.00384817, -0.00591612, 0.197774, -0.192144, -0.877269 )
 layers = 2
 mesh = SubResource( 1 )
 material/0 = null
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Shooting = SubResource( 2 )
+anims/Shooting = SubResource( 3 )
 
 [node name="ShootParticles" parent="." instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 2.84218e-14, 0, 1, 0, -2.84218e-14, 0, 1, 0.0361462, 0.0720549, -1.68325 )
