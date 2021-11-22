@@ -4,9 +4,6 @@ using System;
 public abstract class Gun : Spatial, IGun
 {
     [Export]
-    protected float FireRate = 1.0f;
-
-    [Export]
     protected NodePath ShootParticlesPath;
 
     [Export]
@@ -17,9 +14,7 @@ public abstract class Gun : Spatial, IGun
     }
 
     protected Particles ShootParticles;
-    protected AnimationPlayer AnimationPlayer;
-    public Boolean IsFiring { get; }
-    public Boolean IsReloading { get; }    
+    protected AnimationPlayer AnimationPlayer;   
     public AmmoManager AmmoManager { get; set; }
     
     public abstract void Shoot();
