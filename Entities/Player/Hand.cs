@@ -1,21 +1,18 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public class Hand : Spatial
 {
     [Export]
     public int MaxSlots;
     private int CurrentSlot = 0;
-    private Spatial[] Slots;
+    private List<Spatial> Slots;
     
     public override void _Ready()
     {
-        Slots = new Spatial[MaxSlots];
+        Slots = new List<Spatial>();
         GetNode<EventsBus>(Constants.NodePath.EventsBus).Connect("HudReady", this, "OnHudReady");
-        for (int i = 0; i < MaxSlots; i++)
-        {
-            Slots[i] = GetNode<Spatial>($"Slot_{i}");
-        }
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -45,7 +42,7 @@ public class Hand : Spatial
 
     public void NextWeapon()
     {
-        if (CurrentSlot + 1 >= MaxSlots) return;
+        if (CurrentSlot + 1 >= Slots.Count) return;
         UnequipWeapon(CurrentSlot);
         CurrentSlot++;
         EquipWeapon(CurrentSlot);
@@ -62,33 +59,51 @@ public class Hand : Spatial
     private void OnHudReady()
     {
         M16 m16 = ResourceLoader.Load<PackedScene>(Constants.Scene.M16).Instance<M16>();
-        //M1911 m1911 = ResourceLoader.Load<PackedScene>(Constants.Scene.M1911).Instance<M1911>();
-        //m1911.AmmoManager = new AmmoManager(ammoMagazine: 10, magazineSize: 10, extraAmmo: 60);
+        M1911 m1911 = ResourceLoader.Load<PackedScene>(Constants.Scene.M1911).Instance<M1911>();
+        m1911.AmmoManager = new AmmoManager(ammoMagazine: 10, magazineSize: 10, extraAmmo: 60);
         m16.AmmoManager = new AmmoManager(ammoMagazine: 30, magazineSize: 30, extraAmmo: 160);
-        PutAllGuns(new EquipableGun[] {m16});
+        PutAllGuns(new EquipableGun[] {m16, m1911});
     }
 
-    public void PutAllGuns(EquipableGun[] weapons)
+    public void PutAllGuns(EquipableGun[] guns)
     {
-        int maxWeapons = MaxSlots >= weapons.Length? weapons.Length : MaxSlots;
+        int maxWeapons = MaxSlots >= guns.Length? guns.Length : MaxSlots;
 
         if (maxWeapons == 0) return;
         
         for (int i = 0; i < maxWeapons; i++)
         {
-            Slots[i].AddChild(weapons[i]);
+            PutGun(guns[i]);
         }
         Slots[0].GetChild<IEquipableWeapon>(0).Equip();
     }
 
+    public void PutGun(EquipableGun gun)
+    {
+        if (Slots.Count >= MaxSlots) 
+        {
+            //TODO: Emette evento 
+            return;
+        }
+
+        Spatial newSlot = new Spatial();
+        newSlot.Name = $"Slot_{Slots.Count}";
+        newSlot.AddChild(gun);
+        
+        AddChild(newSlot);
+        Slots.Add(newSlot);
+    }
+
     public void UnequipWeapon(int slotIndex)
     {
+        if (Slots[slotIndex].GetChildCount() == 0) return;
         Slots[slotIndex].GetChild<IEquipableWeapon>(0).Unequip();
         Slots[slotIndex].Visible = false;
     }
 
     public void EquipWeapon(int slotIndex)
     {
+        if (Slots[slotIndex].GetChildCount() == 0) return;
         Slots[slotIndex].Visible = true;
         Slots[slotIndex].GetChild<IEquipableWeapon>(0).Equip();
     }
