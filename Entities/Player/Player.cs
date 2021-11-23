@@ -110,7 +110,6 @@ public class Player : KinematicBody, IDebuggable
         int currAccelaration = IsOnFloor() ? Accelaration : AirAccelaration;
         int currSpeed = Input.IsActionPressed("sprint") ? SprintSpeed : Speed;
         
-        //NOTA: Pensa all'interpolazione lineare tra due colori
         Velocity = Velocity.LinearInterpolate(Direction * currSpeed, currAccelaration * delta);
 
         MoveAndSlideWithSnap(Velocity, Snap, Vector3.Up, true);
