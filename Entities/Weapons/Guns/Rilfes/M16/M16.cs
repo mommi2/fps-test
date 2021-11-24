@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class M16 : EquipableGun
+public class M16 : Gun
 {
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -31,7 +31,7 @@ public class M16 : EquipableGun
         GD.Print("M16 shoot");
         AmmoManager.Consume();
         ShootParticles.Emitting = true;
-        AnimationPlayer.Play(Animations.Shooting);
+        AnimationPlayer.Play(Animations.Gun.Shooting);
         GetNode<EventsBus>(Constants.NodePath.EventsBus).EmitSignal("GunAmmoChanged", AmmoManager);
     }
 
@@ -39,7 +39,7 @@ public class M16 : EquipableGun
     {
         GD.Print("M16 equip");
         IsEquipped = true;
-        GetNode<EventsBus>(Constants.NodePath.EventsBus).EmitSignal("GunEquipped", this);
+        GetNode<EventsBus>(Constants.NodePath.EventsBus).EmitSignal("WeaponEquipped", this);
     }
 
     public override void Unequip()
@@ -50,6 +50,6 @@ public class M16 : EquipableGun
 
     public override bool IsShooting()
     {
-        return AnimationPlayer.IsPlaying() && AnimationPlayer.CurrentAnimation == Animations.Shooting;
+        return AnimationPlayer.IsPlaying() && AnimationPlayer.CurrentAnimation == Animations.Gun.Shooting;
     }
 }

@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class M1911 : EquipableGun
+public class M1911 : Gun
 {
     public override void _Ready()
     {
@@ -36,7 +36,7 @@ public class M1911 : EquipableGun
     {
         GD.Print("M1911 equip");
         IsEquipped = true;
-        GetNode<EventsBus>(Constants.NodePath.EventsBus).EmitSignal("GunEquipped", this);
+        GetNode<EventsBus>(Constants.NodePath.EventsBus).EmitSignal("WeaponEquipped", this);
     }
 
     public override void Unequip()

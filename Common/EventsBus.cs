@@ -4,7 +4,7 @@ using System;
 public class EventsBus : Node
 {
     [Signal]
-    public delegate void GunEquipped(EquipableGun equipableGun);
+    public delegate void WeaponEquipped(Weapon weapon);
 
     [Signal]
     public delegate void GunAmmoChanged(AmmoManager ammoManager);

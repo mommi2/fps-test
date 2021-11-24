@@ -62,23 +62,23 @@ public class Hand : Spatial
         M1911 m1911 = ResourceLoader.Load<PackedScene>(Constants.Scene.M1911).Instance<M1911>();
         m1911.AmmoManager = new AmmoManager(ammoMagazine: 10, magazineSize: 10, extraAmmo: 60);
         m16.AmmoManager = new AmmoManager(ammoMagazine: 30, magazineSize: 30, extraAmmo: 160);
-        PutAllGuns(new EquipableGun[] {m16, m1911});
+        PutAllWeapons(new Weapon[] {m16, m1911});
     }
 
-    public void PutAllGuns(EquipableGun[] guns)
+    public void PutAllWeapons(Weapon[] weapons)
     {
-        int maxWeapons = MaxSlots >= guns.Length? guns.Length : MaxSlots;
+        int maxWeapons = MaxSlots >= weapons.Length? weapons.Length : MaxSlots;
 
         if (maxWeapons == 0) return;
         
         for (int i = 0; i < maxWeapons; i++)
         {
-            PutGun(guns[i]);
+            PutWeapon(weapons[i]);
         }
-        Slots[0].GetChild<IEquipableWeapon>(0).Equip();
+        Slots[0].GetChild<Weapon>(0).Equip();
     }
 
-    public void PutGun(EquipableGun gun)
+    public void PutWeapon(Weapon weapon)
     {
         if (Slots.Count >= MaxSlots) 
         {
@@ -88,7 +88,7 @@ public class Hand : Spatial
 
         Spatial newSlot = new Spatial();
         newSlot.Name = $"Slot_{Slots.Count}";
-        newSlot.AddChild(gun);
+        newSlot.AddChild(weapon);
         
         AddChild(newSlot);
         Slots.Add(newSlot);
@@ -97,7 +97,7 @@ public class Hand : Spatial
     public void UnequipWeapon(int slotIndex)
     {
         if (Slots[slotIndex].GetChildCount() == 0) return;
-        Slots[slotIndex].GetChild<IEquipableWeapon>(0).Unequip();
+        Slots[slotIndex].GetChild<Weapon>(0).Unequip();
         Slots[slotIndex].Visible = false;
     }
 
@@ -105,6 +105,6 @@ public class Hand : Spatial
     {
         if (Slots[slotIndex].GetChildCount() == 0) return;
         Slots[slotIndex].Visible = true;
-        Slots[slotIndex].GetChild<IEquipableWeapon>(0).Equip();
+        Slots[slotIndex].GetChild<Weapon>(0).Equip();
     }
 }

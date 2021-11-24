@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public abstract class EquipableGun : Gun, IEquipableWeapon
+public abstract class EquipableWeapon : IEquipableWeapon
 {
     [Signal]
     public delegate void Equipped();

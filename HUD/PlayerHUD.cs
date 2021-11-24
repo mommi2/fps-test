@@ -10,9 +10,8 @@ public class PlayerHUD : Control
     {
         GD.Print("HUD");
         AmmoCounter = GetNode<Label>("PanelContainer/AmmoCounter");
-        GetNode<EventsBus>(Constants.NodePath.EventsBus).Connect("GunEquipped", this, "OnGunEquipped");
+        GetNode<EventsBus>(Constants.NodePath.EventsBus).Connect("WeaponEquipped", this, "OnWeaponEquipped");
         GetNode<EventsBus>(Constants.NodePath.EventsBus).Connect("GunAmmoChanged", this, "OnGunAmmoChanged");
-
         GetNode<EventsBus>(Constants.NodePath.EventsBus).EmitSignal("HudReady");
     }
 
@@ -32,9 +31,13 @@ public class PlayerHUD : Control
         AmmoCounter.Text = $"{ammoManager.AmmoMagazine.ToString().PadLeft(2, '0')}/{ammoManager.ExtraAmmo.ToString().PadLeft(3, '0')}";
     }
 
-    private void OnGunEquipped(EquipableGun equipableGun)
+    private void OnWeaponEquipped(Weapon weapon)
     {
-        GD.Print("Gun Equipped from HUD");
-        UpdateAmmo(equipableGun.AmmoManager);
+        GD.Print("Weapon Equipped from HUD");
+
+    	if (weapon is Gun gun)
+        {
+            UpdateAmmo(gun.AmmoManager);
+        }
     } 
 }

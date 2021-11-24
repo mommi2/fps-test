@@ -1,6 +1,6 @@
 using System;
 
-public interface IGun : IWeapon
+public interface IGun
 {
     void Shoot();
     void Reload();
