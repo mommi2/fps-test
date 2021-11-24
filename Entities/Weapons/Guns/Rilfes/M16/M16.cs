@@ -31,7 +31,7 @@ public class M16 : Gun
         GD.Print("M16 shoot");
         AmmoManager.Consume();
         ShootParticles.Emitting = true;
-        AnimationPlayer.Play(Animations.Gun.Shooting);
+        AnimationPlayer.Play(Animations.Shooting);
         GetNode<EventsBus>(Constants.NodePath.EventsBus).EmitSignal("GunAmmoChanged", AmmoManager);
     }
 
@@ -50,6 +50,6 @@ public class M16 : Gun
 
     public override bool IsShooting()
     {
-        return AnimationPlayer.IsPlaying() && AnimationPlayer.CurrentAnimation == Animations.Gun.Shooting;
+        return AnimationPlayer.IsPlaying() && AnimationPlayer.CurrentAnimation == Animations.Shooting;
     }
 }
