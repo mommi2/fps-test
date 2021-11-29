@@ -96,7 +96,7 @@ material/0 = null
 shape = SubResource( 9 )
 
 [node name="MeshInstance6" type="MeshInstance" parent="."]
-transform = Transform( 7.30691, 0, 0, 0, 3.33466, 0, 0, 0, 2.42933, 0, 1.67736, 16.8789 )
+transform = Transform( 7.30691, 0, 0, 0, 3.33466, 0, 0, 0, 2.42933, 0, 1.67736, 11.0675 )
 mesh = SubResource( 10 )
 material/0 = null
 
@@ -107,3 +107,14 @@ shape = SubResource( 11 )
 
 [node name="Console" parent="." instance=ExtResource( 3 )]
 EntityToDebug = NodePath("../Player")
+
+[node name="MeshInstance7" type="MeshInstance" parent="."]
+transform = Transform( 22.7873, 0, 0, 0, 2.30646, 0, 0, 0, 5.90164, 0, 0.606598, 21.8694 )
+mesh = SubResource( 10 )
+skeleton = NodePath("../MeshInstance6")
+material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="MeshInstance7"]
+
+[node name="CollisionShape" type="CollisionShape" parent="MeshInstance7/StaticBody"]
+shape = SubResource( 11 )

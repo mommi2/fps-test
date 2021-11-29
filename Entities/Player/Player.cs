@@ -17,10 +17,10 @@ public class Player : KinematicBody, IDebuggable
     private int Accelaration = 15;
 
     [Export]
-    private float Gravity = 40;
+    private float Gravity = -40;
 
     [Export]
-    private float MaxGravity = 150;
+    private float MaxGravity = -150;
 
     [Export]
     private int JumpVelocity = 15;
@@ -94,8 +94,8 @@ public class Player : KinematicBody, IDebuggable
 
         Direction = GetInputDirection();
         
-        Velocity.y -= Gravity * delta;
-        Velocity.y = (Velocity.y < -MaxGravity) ? Velocity.y = -MaxGravity : Velocity.y;
+        Velocity.y += Gravity * delta;
+        if (Velocity.y < MaxGravity) Velocity.y = MaxGravity;
 
         if (Input.IsActionJustPressed("jump") && IsOnFloor())
         {
@@ -112,6 +112,6 @@ public class Player : KinematicBody, IDebuggable
         
         Velocity = Velocity.LinearInterpolate(Direction * currSpeed, currAccelaration * delta);
 
-        MoveAndSlideWithSnap(Velocity, Snap, Vector3.Up, true);
+        Velocity = MoveAndSlideWithSnap(Velocity, Snap, Vector3.Up, true, 4, Mathf.Deg2Rad(80));
     }
 }
