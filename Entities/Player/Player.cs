@@ -97,6 +97,12 @@ public class Player : KinematicBody, IDebuggable
         Velocity.y += Gravity * delta;
         if (Velocity.y < MaxGravity) Velocity.y = MaxGravity;
 
+        int currAccelaration = IsOnFloor() ? Accelaration : AirAccelaration;
+        int currSpeed = Input.IsActionPressed("sprint") ? SprintSpeed : Speed;
+        
+        Velocity = Velocity.LinearInterpolate(Direction * currSpeed, currAccelaration * delta);
+        Velocity = MoveAndSlideWithSnap(Velocity, Snap, Vector3.Up, true, 4, Mathf.Deg2Rad(80));
+
         if (Input.IsActionJustPressed("jump") && IsOnFloor())
         {
             Velocity.y = JumpVelocity;
@@ -106,12 +112,5 @@ public class Player : KinematicBody, IDebuggable
         {
             Snap = Vector3.Down;
         }
-
-        int currAccelaration = IsOnFloor() ? Accelaration : AirAccelaration;
-        int currSpeed = Input.IsActionPressed("sprint") ? SprintSpeed : Speed;
-        
-        Velocity = Velocity.LinearInterpolate(Direction * currSpeed, currAccelaration * delta);
-
-        Velocity = MoveAndSlideWithSnap(Velocity, Snap, Vector3.Up, true, 4, Mathf.Deg2Rad(80));
     }
 }
