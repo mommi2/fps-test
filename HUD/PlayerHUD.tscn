@@ -42,17 +42,35 @@ anchor_bottom = 1.0
 margin_left = -216.0
 margin_top = -56.0
 custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="AmmoCounter" type="Label" parent="PanelContainer"]
+anchor_left = 1.0
 anchor_top = 0.5
+anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = 12.0
-margin_top = -23.5
-margin_right = 132.0
-margin_bottom = 23.5
+margin_left = -152.0
+margin_top = -23.0
+margin_right = -10.0
+margin_bottom = 24.0
 custom_fonts/font = SubResource( 2 )
 text = "00/000"
 align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InteractionLabel" type="Label" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -248.0
+margin_bottom = -234.0
+text = "Premi E per interagire"
+align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }

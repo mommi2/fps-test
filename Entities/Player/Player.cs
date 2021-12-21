@@ -31,12 +31,16 @@ public class Player : KinematicBody, IDebuggable
     private Vector3 Velocity;
     private Vector3 Direction;
     private Spatial Head;
+    private Interaction InteractionRayCast;
     private Vector3 Snap = Vector3.Zero;
 
     public override void _Ready()
     {
         Input.SetMouseMode(Input.MouseMode.Captured);
         Head = GetNode<Spatial>("Head");
+        InteractionRayCast = GetNode<Interaction>("Head/Camera/InteractionRayCast");
+
+        InteractionRayCast.Connect("InteractingObject", this, "OnInteractingObject");
     }
 
     public override void _Input(InputEvent @event)
@@ -112,5 +116,13 @@ public class Player : KinematicBody, IDebuggable
         {
             Snap = Vector3.Down;
         }
+    }
+
+    private void OnInteractingObject(Node object_)
+    {
+        if (object_ is IInteractable interactable)
+        {
+            interactable.Interact(this);
+        }   
     }
 }
